@@ -2,7 +2,6 @@ import argparse
 import os
 import time
 
-import torch
 import torch.backends.cudnn as cudnn
 import torch.nn as nn
 import torch.nn.init as init
@@ -167,7 +166,6 @@ def train():
             batch_iterator = iter(data_loader)
             images, targets = next(batch_iterator)
 
-
         if args.cuda:
             images = Variable(images.cuda())
             targets = [Variable(ann.cuda(), volatile=True) for ann in targets]
@@ -190,9 +188,9 @@ def train():
         conf_loss += loss_c.item()
 
         if iteration % 10 == 0:
+            print("lr " + str(optimizer.param_groups[0]["lr"]), end=" ", flush=True)
             print('iter ' + repr(iteration) + ' || Loss: %.4f ||' % (loss.item()), end=' ', flush=True)
             print('timer: %.4f sec.' % (t1 - t0), flush=True)
-
 
         if args.visdom:
             update_vis_plot(iteration, loss_l.item(), loss_c.item(),
