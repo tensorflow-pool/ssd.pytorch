@@ -190,8 +190,8 @@ def train():
         conf_loss += loss_c.item()
 
         if iteration % 10 == 0:
-            print('timer: %.4f sec.' % (t1 - t0), flush=True)
             print('iter ' + repr(iteration) + ' || Loss: %.4f ||' % (loss.item()), end=' ', flush=True)
+            print('timer: %.4f sec.' % (t1 - t0), flush=True)
 
 
         if args.visdom:
