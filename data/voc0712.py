@@ -5,13 +5,16 @@ https://github.com/fmassa/vision/blob/voc_dataset/torchvision/datasets/voc.py
 
 Updated by: Ellis Brown, Max deGroot
 """
-from .config import HOME
 import os.path as osp
 import sys
-import torch
-import torch.utils.data as data
+
 import cv2
 import numpy as np
+import torch
+import torch.utils.data as data
+
+from .config import HOME
+
 if sys.version_info[0] == 2:
     import xml.etree.cElementTree as ET
 else:
@@ -110,6 +113,7 @@ class VOCDetection(data.Dataset):
             rootpath = osp.join(self.root, 'VOC' + year)
             for line in open(osp.join(rootpath, 'ImageSets', 'Main', name + '.txt')):
                 self.ids.append((rootpath, line.strip()))
+        # self.ids = self.ids[:32]
 
     def __getitem__(self, index):
         im, gt, h, w = self.pull_item(index)
