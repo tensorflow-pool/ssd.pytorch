@@ -190,8 +190,9 @@ def train():
         conf_loss += loss_c.item()
 
         if iteration % 10 == 0:
-            print('timer: %.4f sec.' % (t1 - t0))
-            print('iter ' + repr(iteration) + ' || Loss: %.4f ||' % (loss.item()), end=' ')
+            print('timer: %.4f sec.' % (t1 - t0), flush=True)
+            print('iter ' + repr(iteration) + ' || Loss: %.4f ||' % (loss.item()), end=' ', flush=True)
+
 
         if args.visdom:
             update_vis_plot(iteration, loss_l.item(), loss_c.item(),
