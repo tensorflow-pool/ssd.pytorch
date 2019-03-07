@@ -182,7 +182,7 @@ def train():
         # backprop
         optimizer.zero_grad()
         loss_l, loss_c = criterion(out, targets)
-        loss = loss_l + 5 * loss_c
+        loss = loss_l + 2 * loss_c
         loss.backward()
         optimizer.step()
         t1 = time.time()
