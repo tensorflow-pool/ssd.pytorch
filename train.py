@@ -129,7 +129,7 @@ def train():
     loc_loss = 0
     conf_loss = 0
     epoch = 0
-    print('Loading the dataset...')
+    print('Loading the dataset...', len(dataset))
 
     epoch_size = len(dataset) // args.batch_size
     print('Training SSD on:', dataset.name)
