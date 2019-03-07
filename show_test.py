@@ -14,7 +14,7 @@ from data import VOC_ROOT, VOC_CLASSES as labelmap
 from ssd import build_ssd
 
 parser = argparse.ArgumentParser(description='Single Shot MultiBox Detection')
-parser.add_argument('--trained_model', default='weights/3_7_VOC_750.pth',
+parser.add_argument('--trained_model', default='weights/3_7_VOC_240.pth',
                     type=str, help='Trained state_dict file path to open')
 parser.add_argument('--save_folder', default='eval/', type=str,
                     help='Dir to save results')
@@ -85,7 +85,7 @@ def test_net(save_folder, net, cuda, testset, transform, thresh):
                 h, w, _ = img.shape
 
                 for rect in rects:
-                    if rect[0] < 0.3:
+                    if rect[0] < 0.2:
                         continue
                     pt = (rect[1] * w, rect[2] * h)
                     coords = pt, (rect[3] - rect[1]) * w, (rect[4] - rect[2]) * h
