@@ -1,4 +1,5 @@
 import argparse
+import logging
 import os
 import time
 
@@ -13,6 +14,9 @@ from data import *
 from layers.modules import MultiBoxLoss
 from ssd import build_ssd
 from utils.augmentations import SSDAugmentation
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger("train")
 
 
 def str2bool(v):
@@ -188,17 +192,15 @@ def train():
         conf_loss += loss_c.item()
 
         if iteration % 10 == 0:
-            print("lr " + str(optimizer.param_groups[0]["lr"]), end=" ", flush=True)
-            print('iter ' + repr(iteration) + ' || Loss: %.4f ||' % (loss.item()), end=' ', flush=True)
-            print('timer: %.4f sec.' % (t1 - t0), flush=True)
+            logging.info("lr %s iter %s Loss %s l_loss %s c_loss %s time %s", optimizer.param_groups[0]["lr"], iteration, loss.item(), loss_l.item(), loss_c.item(), (t1 - t0))
 
         if args.visdom:
             update_vis_plot(iteration, loss_l.item(), loss_c.item(),
                             iter_plot, epoch_plot, 'append')
 
-        if iteration != 0 and iteration % 5000 == 0:
+        if iteration != 0 and iteration % 500 == 0:
             print('Saving state, iter:', iteration)
-            torch.save(ssd_net.state_dict(), 'weights/ssd300' + args.dataset + '_' +
+            torch.save(ssd_net.state_dict(), 'weights/3_7_' + args.dataset + '_' +
                        repr(iteration) + '.pth')
     torch.save(ssd_net.state_dict(),
                args.save_folder + '' + args.dataset + '.pth')
