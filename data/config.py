@@ -13,7 +13,7 @@ MEANS = (104, 117, 123)
 # SSD300 CONFIGS
 voc = {
     'num_classes': 21,
-    'lr_steps': (750, 1500, 2500),
+    'lr_steps': (15000, 30000, 40000),
     'max_iter': 120000,
     'feature_maps': [38, 19, 10, 5, 3, 1],
     'min_dim': 300,
