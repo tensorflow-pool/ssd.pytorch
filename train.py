@@ -198,9 +198,9 @@ def train():
             update_vis_plot(iteration, loss_l.item(), loss_c.item(),
                             iter_plot, epoch_plot, 'append')
 
-        if iteration != 0 and iteration % 150 == 0:
+        if iteration != 0 and iteration % 100 == 0:
             print('Saving state, iter:', iteration)
-            torch.save(ssd_net.state_dict(), 'weights/3_7_18_' + args.dataset + '_' +
+            torch.save(ssd_net.state_dict(), 'weights/640_' + args.dataset + '_' +
                        repr(iteration) + '.pth')
     torch.save(ssd_net.state_dict(),
                args.save_folder + '' + args.dataset + '.pth')
