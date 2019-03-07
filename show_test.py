@@ -64,7 +64,7 @@ def test_net(save_folder, net, cuda, testset, transform, thresh):
             pred_num = 0
             for i in range(detections.size(1)):
                 j = 0
-                while detections[0, i, j, 0] >= 0.5:
+                while detections[0, i, j, 0] >= 0.4:
                     if pred_num == 0:
                         f.write('PREDICTIONS: ' + '\n')
                     score = detections[0, i, j, 0]
@@ -85,7 +85,7 @@ def test_net(save_folder, net, cuda, testset, transform, thresh):
                 h, w, _ = img.shape
 
                 for rect in rects:
-                    if rect[0] < 0.5:
+                    if rect[0] < 0.4:
                         continue
                     pt = (rect[1] * w, rect[2] * h)
                     coords = pt, (rect[3] - rect[1]) * w, (rect[4] - rect[2]) * h
@@ -94,7 +94,6 @@ def test_net(save_folder, net, cuda, testset, transform, thresh):
                     currentAxis.text(pt[0], pt[1], display_txt, bbox={'facecolor': colors[i], 'alpha': 0.5})
 
             plt.show()
-            break
 
 
 def test_voc():
