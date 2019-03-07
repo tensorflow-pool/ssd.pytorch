@@ -14,7 +14,7 @@ from data import VOC_ROOT, VOC_CLASSES as labelmap
 from ssd import build_ssd
 
 parser = argparse.ArgumentParser(description='Single Shot MultiBox Detection')
-parser.add_argument('--trained_model', default='weights/3_7_VOC_600.pth',
+parser.add_argument('--trained_model', default='weights/3_7_VOC_500.pth',
                     type=str, help='Trained state_dict file path to open')
 parser.add_argument('--save_folder', default='eval/', type=str,
                     help='Dir to save results')
@@ -104,7 +104,7 @@ def test_voc():
     net.eval()
     print('Finished loading model!')
     # load data
-    testset = VOCDetection(args.voc_root, [('2007', 'test')], None, VOCAnnotationTransform())
+    testset = VOCDetection(args.voc_root, [('2007', 'trainval')], None, VOCAnnotationTransform())
     if args.cuda:
         net = net.cuda()
         cudnn.benchmark = True
