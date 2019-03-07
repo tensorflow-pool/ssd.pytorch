@@ -182,7 +182,7 @@ def train():
         # backprop
         optimizer.zero_grad()
         loss_l, loss_c = criterion(out, targets)
-        loss = loss_l + loss_c
+        loss = loss_l + 5 * loss_c
         loss.backward()
         optimizer.step()
         t1 = time.time()
@@ -200,7 +200,7 @@ def train():
 
         if iteration != 0 and iteration % 100 == 0:
             print('Saving state, iter:', iteration)
-            torch.save(ssd_net.state_dict(), 'weights/640_' + args.dataset + '_' +
+            torch.save(ssd_net.state_dict(), 'weights/32_' + args.dataset + '_' +
                        repr(iteration) + '.pth')
     torch.save(ssd_net.state_dict(),
                args.save_folder + '' + args.dataset + '.pth')
