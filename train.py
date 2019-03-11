@@ -146,7 +146,7 @@ def train():
 
     data_loader = data.DataLoader(dataset, args.batch_size,
                                   num_workers=args.num_workers,
-                                  shuffle=True, collate_fn=detection_collate,
+                                  shuffle=False, collate_fn=detection_collate,
                                   pin_memory=True)
     # create batch iterator
     batch_iterator = iter(data_loader)
@@ -181,8 +181,8 @@ def train():
         out = net(images)
         # backprop
         optimizer.zero_grad()
-        loss_l, loss_c = criterion(out, targets)
-        loss = loss_l + 2 * loss_c
+        loss_l, loss_c, pos_num = criterion(out, targets)
+        loss = loss_l + loss_c
         loss.backward()
         optimizer.step()
         t1 = time.time()
@@ -192,7 +192,7 @@ def train():
         conf_loss += loss_c.item()
 
         if iteration % 10 == 0:
-            logging.info("lr %s iter %s Loss %s l_loss %s c_loss %s time %s", optimizer.param_groups[0]["lr"], iteration, loss.item(), loss_l.item(), loss_c.item(), (t1 - t0))
+            logging.info("lr %s iter %s Loss %s l_loss %s c_loss %s pos_num %s time %s", optimizer.param_groups[0]["lr"], iteration, loss.item(), loss_l.item(), loss_c.item(), pos_num.item(), (t1 - t0))
 
         if args.visdom:
             update_vis_plot(iteration, loss_l.item(), loss_c.item(),

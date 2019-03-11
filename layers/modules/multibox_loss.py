@@ -118,4 +118,4 @@ class MultiBoxLoss(nn.Module):
         loss_c = loss_c.clamp(min=0, max=9999999)
         loss_l /= N
         loss_c /= N
-        return loss_l, loss_c
+        return loss_l, loss_c, N
